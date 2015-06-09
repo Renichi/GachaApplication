@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include "server.h"
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
             LPSTR lpCmdLine, int nCmdShow )
@@ -7,9 +8,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     int NetHandle , LostHandle ;    // ネットワークハンドル
     int DataLength ;            // 受信データ量保存用変数
     IPDATA Ip ;            // 接続先ＩＰアドレスデータ
-	IPDATA myIpAddress;
 	int ipNum = 0;
 	char buf[ 256 ];
+
+	server* ps = new server();
 
 	ChangeWindowMode( true );
 
@@ -18,35 +20,19 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
         return -1;    // エラーが起きたら直ちに終了
     }
 
-	// IPアドレスの取得
-	GetMyIPAddress( &myIpAddress );
-	sprintf_s( buf, "IP Address = %d.%d.%d.%d", myIpAddress.d1, myIpAddress.d2, myIpAddress.d3, myIpAddress.d4 );
-
-    // 接続してくるのを待つ状態にする
-    PreparationListenNetWork( 9850 );
-
-    // 接続してくるかＥＳＣキーが押されるまでループ
-    NetHandle = -1;
+	ps->initialize();
 
     while ( !ProcessMessage() && CheckHitKey( KEY_INPUT_ESCAPE ) == 0 ) {
         // 新しい接続があったらそのネットワークハンドルを得る
-        NetHandle = GetNewAcceptNetWork();
+		NetHandle = ps->getNetHandle();
         if ( NetHandle != -1 ) {
 			break;
 		}
-
-		DrawString( 0, 0, buf, GetColor( 255, 255, 255 ) );
     }
 
     // 接続されていたら次に進む
-    if( NetHandle != -1 )
-    {
-        // 接続の受付を終了する
-        StopListenNetWork();
-
-        // 接続してきたマシンのＩＰアドレスを得る
-        GetNetWorkIP( NetHandle , &Ip );
-
+    if( NetHandle != -1 ) {
+   
         // データが送られて来るまで待つ
         while( !ProcessMessage() )
         {
