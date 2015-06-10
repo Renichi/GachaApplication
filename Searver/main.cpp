@@ -22,31 +22,22 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	NetHandle = -1;
 	ps->initialize();
-	
-
-    while ( !ProcessMessage() && CheckHitKey( KEY_INPUT_ESCAPE ) == 0 ) {
-        // 新しい接続があったらそのネットワークハンドルを得る
-		NetHandle = ps->getNetHandle();
-		//デバック用のNetHandle;
-		NetHandle = 0;
-        if ( NetHandle != -1 ) {
-			break;
-		}
-    }
 
 	DateBase* datebase = new DateBase( );
 
 	ps->readAdress( *datebase );
 	psd->readAdress( *datebase );
 	
-    // 接続されていたら次に進む
-    if( NetHandle != -1 ) {
-		while( true ) {
-			ClearDrawScreen( );
-			psd->update( );
-			ps->running( );
+	while( true ) {
+		ClearDrawScreen( );
+		psd->update( );
+		ps->running( );
+		// 裏画面の内容を表画面に反映させる
+		ScreenFlip();
+		if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) {
+			break;
 		}
-    }
+	}
 
     DxLib_End() ;    // ＤＸライブラリ使用の終了処理
 

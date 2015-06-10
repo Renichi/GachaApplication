@@ -2,8 +2,14 @@
 
 
 server::server() {
-	clientStatusA = "OFFLINE";
+	clientStatus[0] = "OFFLINE";
+	clientStatus[1] = "OFFLINE";
+	clientStatus[2] = "OFFLINE";
+	clientStatus[3] = "OFFLINE";
+	clientStatus[4] = "OFFLINE";
+	clientStatus[5] = "OFFLINE";
 	_dp = new DatePack;
+	_clientNum;
 }
 
 
@@ -30,15 +36,18 @@ void server::initialize() {
 		// 新しい接続があったらそのネットワークハンドルを得る
 		NetHandle = GetNewAcceptNetWork();
 		if (NetHandle != -1) {
-			_NetHandleA = NetHandle;
-			clientStatusA = "ONLINE";
+			_NetHandle[ _clientNum ] = NetHandle;
+			_clientNum++;
+			clientStatus[ _clientNum ] = "ONLINE";
 		}
 		DrawString(0, 0, buf, GetColor(255, 255, 255));
-		DrawString(0, 30,(  "CLIENT_A:" + clientStatusA ).c_str( ), GetColor(255, 255, 255));
-
-		
+		DrawString(0, 30, ("CLIENT_A:" + clientStatus[ 0 ] ).c_str( ), GetColor(255, 255, 255));
+		DrawString(0, 50, ("CLIENT_B:" + clientStatus[ 1 ]).c_str(), GetColor(255, 255, 255));
+		DrawString(0, 70, ("CLIENT_C:" + clientStatus[ 2 ]).c_str(), GetColor(255, 255, 255));
+		DrawString(0, 90, ("CLIENT_D:" + clientStatus[ 3 ]).c_str(), GetColor(255, 255, 255));
+		DrawString(0, 110, ("CLIENT_E:" + clientStatus[ 4 ]).c_str(), GetColor(255, 255, 255));
+		DrawString(0, 130, ("CLIENT_F:" + clientStatus[ 5 ]).c_str(), GetColor(255, 255, 255));
 	}
-	
 	// 接続の受付を終了する
 	StopListenNetWork();
 	// 接続してきたマシンのＩＰアドレスを得る
@@ -46,7 +55,7 @@ void server::initialize() {
 }
 
 void server::running( ) {
-	int NetHandle,LostHandle;
+	int NetHandle;
     int DataLength ;            // 受信データ量保存用変数
 
 	NetHandle = this->getNetHandle( ); 
@@ -55,22 +64,28 @@ void server::running( ) {
         while( !ProcessMessage() )
         {
             // 取得していない受信データ量が０以外のときはループから抜ける
-            if( GetNetWorkDataLength( NetHandle ) != 0 ) {
+			for (int i = 0; i < 6; i++) {
+				if (GetNetWorkDataLength(_NetHandle[ i ]) != 0) {
+					NetHandle = _NetHandle[i];
+					break;
+				}
+			}
+			if (NetHandle != 0) {
 				break;
 			}
         }
-
         // データ受信
         DataLength = GetNetWorkDataLength( NetHandle ) ;    // データの量を取得
-
 		NetWorkRecv( NetHandle , _dp , DataLength );    // データをバッファに取得
-
-		if ( _dp->command == 0 ) {
-			_db->update( 1, 0, 0, 0 );
-			NetWorkSend( NetHandle , "もらったよ", 30 ) ;
+		if (_dp->command == 1) {
+			_dp->prize = normalGacha();
+			NetWorkSend(NetHandle, _dp, 30);
 		}
-
-		_dp->command = 1;
+		if (_dp->command == 2) {
+			_dp->prize = premiumGacha();
+			NetWorkSend(NetHandle, _dp, 30);
+		}
+		_dp->command = 0;
 
         // 受信したデータを描画
         //DrawString( 0 , 0 , StrBuf , GetColor( 255 , 255 , 255 ) ) ;
@@ -99,5 +114,46 @@ void server::readAdress( DateBase& adress) {
 }
 
 int server::getNetHandle() {
-	return _NetHandleA;
+	return _NetHandle[0];
+}
+
+int server::normalGacha() {
+	//景品の倍率
+	int prize;
+	int rare_B_probability = 2389;
+	int rare_A_probability = 6928;
+	//ランダムの確立
+	int random_probability = 10000;
+	int probability = GetRand(10000);
+	if (probability <= rare_B_probability) {
+		prize = 1;
+		_db->update(0, 1, 0, 0);
+	} else {
+		prize = 2;
+		_db->update(1, 0, 0, 0);
+	}
+	return prize;
+}
+
+int server::premiumGacha() {
+	int prize;
+	int rare_S_probability = 125;
+	int rare_C_probability = 558;
+	int rare_B_probability = 2389;
+	//ランダムの確立
+	int random_probability = 10000;
+	int probability = GetRand(10000);
+	if (probability <= rare_S_probability) {
+		prize = 3;
+		_db->update(0, 0, 0, 1);
+	}
+	else if ( probability <= ( rare_S_probability + rare_C_probability)) {
+		prize = 0;
+		_db->update(0, 0, 1, 0);
+	} else {
+		prize = 1;
+		_db->update(0, 1, 0, 0);
+	}
+	return prize;
+
 }

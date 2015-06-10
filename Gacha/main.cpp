@@ -19,25 +19,19 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	client* pClient = new client( );
 	DrawMain* pDraw = new DrawMain();
 
-	/*pClient->Initialize( );
+	pClient->Initialize( );
 
     // ’ÊM‚ğŠm—§
-    NetHandle = ConnectNetWork( pClient->getIP( ), 9850 ) ;*/
-
-	NetHandle = 0;
+    NetHandle = ConnectNetWork( pClient->getIP( ), 9850 ) ;
     // Šm—§‚ª¬Œ÷‚µ‚½ê‡‚Ì‚İ’†‚Ìˆ—‚ğ‚·‚é
-    if( NetHandle != -1 )
-    { 
+    if( NetHandle != -1 ) { 
 		while( true ) {
-			
-			pDraw->update();
-			//pClient->running( );
+			pDraw->update( NetHandle );
 			if (CheckHitKey(KEY_INPUT_ESCAPE)) {
 				break;
 			}
 		}
     }
-
     // Ú‘±‚ğ’f‚Â
     CloseNetWork( NetHandle ) ;
 

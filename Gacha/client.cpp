@@ -57,14 +57,13 @@ void client::Initialize( ) {
 	 _Ip.d4 = ( unsigned char )vaPlus[ 3 ];
 }
 
-void client::running() {
+void client::running(  ) {
 	// データ送信
 	int NetHandle;
 	int DataLength ;        // 受信データ量保存用変数
 	char StrBuf[ 256 ] ;    // データバッファ
 
-	NetHandle = ConnectNetWork( this->getIP( ), 9850 ) ;
-    //NetWorkSend( NetHandle , "繋がったか～！？" , 17 ) ;
+	NetHandle = ConnectNetWork(this->getIP(), 9850);
 
 	while( true ) {
 		if ( !ProcessMessage() && ( CheckHitKey( KEY_INPUT_A ) == 1  ) ) {

@@ -13,9 +13,12 @@ public:
 	void finitialize();
 	int getNetHandle();
 	void readAdress( DateBase& adress );
+	int normalGacha();
+	int premiumGacha();
 private:
-	int _NetHandleA;
-	std::string clientStatusA;
+	int _NetHandle[ 6 ];
+	int _clientNum;
+	std::string clientStatus[ 6 ];
 	DateBase* _db;
 	DatePack* _dp;
 };

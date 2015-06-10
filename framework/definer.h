@@ -13,4 +13,5 @@ struct ScorePack {
 
 struct DatePack {
 	int command;
+	int prize;
 };
