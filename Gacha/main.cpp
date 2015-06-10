@@ -1,14 +1,16 @@
 #include "DxLib.h"
 #include "client.h"
+#include "DrawMain.h"
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
              LPSTR lpCmdLine, int nCmdShow )
 {
    
     int NetHandle ;        // ネットワークハンドル
-   
 
-	ChangeWindowMode( true );
+	ChangeWindowMode(true);
+	SetGraphMode(2160, 1440, 32);
+	
 
     if( DxLib_Init() == -1 )    // ＤＸライブラリ初期化処理
     {
@@ -16,16 +18,24 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     }
 
 	client* pClient = new client( );
-	pClient->Initialize( );
+	DrawMain* pDraw = new DrawMain();
+
+	/*pClient->Initialize( );
 
     // 通信を確立
-    NetHandle = ConnectNetWork( pClient->getIP( ), 9850 ) ;
+    NetHandle = ConnectNetWork( pClient->getIP( ), 9850 ) ;*/
 
+	NetHandle = 0;
     // 確立が成功した場合のみ中の処理をする
     if( NetHandle != -1 )
     { 
 		while( true ) {
-			pClient->running( );
+			ClearDrawScreen();
+			pDraw->update();
+			//pClient->running( );
+			if (CheckHitKey(CheckHitKey(KEY_INPUT_RETURN) == 0)) {
+				break;
+			}
 		}
     }
 
