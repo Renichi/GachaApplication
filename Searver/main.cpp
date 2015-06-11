@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "server.h"
 #include "ScoreDraw.h"
+#include "DateBase.h"
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
             LPSTR lpCmdLine, int nCmdShow )
@@ -26,12 +27,17 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     while ( !ProcessMessage() && CheckHitKey( KEY_INPUT_ESCAPE ) == 0 ) {
         // 新しい接続があったらそのネットワークハンドルを得る
 		NetHandle = ps->getNetHandle();
+		//デバック用のNetHandle;
 		NetHandle = 0;
         if ( NetHandle != -1 ) {
 			break;
 		}
     }
 
+	DateBase* datebase = new DateBase( );
+
+	ps->readAdress( *datebase );
+	psd->readAdress( *datebase );
 	
     // 接続されていたら次に進む
     if( NetHandle != -1 ) {
@@ -39,7 +45,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			ClearDrawScreen( );
 			psd->update( );
 			ps->running( );
-			
 		}
     }
 

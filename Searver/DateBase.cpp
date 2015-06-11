@@ -12,6 +12,13 @@ DateBase::DateBase() {
 DateBase::~DateBase() {
 }
 
+void DateBase::update( int a, int b, int c, int d ) {
+	_prizeA += a;
+	_prizeB += b;
+	_prizeC += c;
+	_secret += d;
+}
+
 ScorePack DateBase::getScore( ) {
 	
 	ScorePack score = { _prizeA, _prizeB, _prizeC, _secret }; 

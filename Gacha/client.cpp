@@ -57,6 +57,42 @@ void client::Initialize( ) {
 	 _Ip.d4 = ( unsigned char )vaPlus[ 3 ];
 }
 
+void client::running() {
+	// データ送信
+	int NetHandle;
+	int DataLength ;        // 受信データ量保存用変数
+	char StrBuf[ 256 ] ;    // データバッファ
+
+	NetHandle = ConnectNetWork( this->getIP( ), 9850 ) ;
+    //NetWorkSend( NetHandle , "繋がったか～！？" , 17 ) ;
+
+	while( true ) {
+		if ( !ProcessMessage() && ( CheckHitKey( KEY_INPUT_A ) == 1  ) ) {
+			DatePack dp;
+			dp.command = 0;
+			NetWorkSend( NetHandle , (void*)&dp, 30 ) ;
+			break;
+		}
+	}
+
+    // データがくるのを待つ
+    while( !ProcessMessage() )  {
+        // 取得していない受信データ量を得る
+        DataLength = GetNetWorkDataLength( NetHandle ) ;
+
+        // 取得してない受信データ量が０じゃない場合はループを抜ける
+        if( DataLength != 0 ) break ;
+    }
+
+    // データ受信
+    NetWorkRecv( NetHandle , StrBuf , DataLength ) ;    // データをバッファに取得
+
+    // 受信したデータを描画
+    DrawString( 0 , 0 , StrBuf , GetColor( 255 , 255 , 255 ) ) ;
+
+   
+}
+
 IPDATA client::getIP( ) {
 	return _Ip;
 }

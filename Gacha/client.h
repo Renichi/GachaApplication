@@ -1,5 +1,6 @@
 #pragma once
 #include "DxLib.h"
+#include "definer.h"
 #include <string>
 
 class client {

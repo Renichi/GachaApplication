@@ -3,6 +3,7 @@
 
 server::server() {
 	clientStatusA = "OFFLINE";
+	_dp = new DatePack;
 }
 
 
@@ -46,7 +47,6 @@ void server::initialize() {
 
 void server::running( ) {
 	int NetHandle,LostHandle;
-	char StrBuf[ 256 ] ;        // データバッファ
     int DataLength ;            // 受信データ量保存用変数
 
 	NetHandle = this->getNetHandle( ); 
@@ -62,16 +62,24 @@ void server::running( ) {
 
         // データ受信
         DataLength = GetNetWorkDataLength( NetHandle ) ;    // データの量を取得
-        NetWorkRecv( NetHandle , StrBuf , DataLength );    // データをバッファに取得
+
+		NetWorkRecv( NetHandle , _dp , DataLength );    // データをバッファに取得
+
+		if ( _dp->command == 0 ) {
+			_db->update( 1, 0, 0, 0 );
+			NetWorkSend( NetHandle , "もらったよ", 30 ) ;
+		}
+
+		_dp->command = 1;
 
         // 受信したデータを描画
         //DrawString( 0 , 0 , StrBuf , GetColor( 255 , 255 , 255 ) ) ;
 
         // 受信成功のデータを送信
-        NetWorkSend( NetHandle , "繋がったぞ～！！" , 17 ) ;
+       //NetWorkSend( NetHandle , "繋がったぞ～！！" , 17 ) ;
 
         // 相手が通信を切断するまで待つ
-        while( !ProcessMessage() )
+        /*while( !ProcessMessage() )
         {
             // 新たに切断されたネットワークハンドルを得る
             LostHandle = GetLostNetWork() ;
@@ -82,6 +90,12 @@ void server::running( ) {
 
         // 切断確認表示
         DrawString( 0 , 16 , "切断しました" , GetColor( 255 , 255 , 255 ) ) ;
+		*/
+
+}
+
+void server::readAdress( DateBase& adress) {
+	_db = &adress;
 }
 
 int server::getNetHandle() {

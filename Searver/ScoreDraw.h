@@ -10,8 +10,9 @@ public:
 	~ScoreDraw();
 	void update ( );
 	void loadScore( );
+	void readAdress( DateBase& adress );
 private:
-	DateBase* _db;
 	ScorePack _sp;
+	DateBase* _db;
 };
 
