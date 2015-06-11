@@ -1,8 +1,16 @@
 #pragma once
 
-struct ScorePack{ 
-	int prizeA;
-	int prizeB;
-	int prizeC;
-	int secret;
+enum COMMNAD {
+
+};
+
+struct ScorePack { 
+	int ScoreA;
+	int ScoreB;
+	int ScoreC;
+	int ScoreD;
+};
+
+struct DatePack {
+
 };

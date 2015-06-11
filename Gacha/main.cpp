@@ -18,12 +18,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	client* pClient = new client( );
 	pClient->Initialize( );
 
-    // ‚h‚oƒAƒhƒŒƒX‚ðÝ’è( ‚±‚±‚É‚ ‚é‚S‚Â‚Ì‚h‚o’l‚Í‰¼‚Å‚· )
-   /* Ip.d1 = 172 ;
-    Ip.d2 = 18 ;
-    Ip.d3 = 10  ;
-    Ip.d4 = 122 ;*/
-
     // ’ÊM‚ðŠm—§
     NetHandle = ConnectNetWork( pClient->getIP( ), 9850 ) ;
 

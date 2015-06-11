@@ -17,7 +17,7 @@ void client::Initialize( ) {
 	 int count = 0;
 
 	 //IPアドレスの入力
-	 while( !ProcessMessage() && ( CheckHitKey( KEY_INPUT_ESCAPE ) == 0 ) ) {
+	 while( !ProcessMessage() && ( CheckHitKey( KEY_INPUT_RETURN ) == 0 ) ) {
 		DrawString( 250 , 240 - 32 , "サーバのIPアドレスを入力してください" , Cr );
 		// 文字入力バッファから文字を取得する
          InputChar = GetInputChar( TRUE ) ;

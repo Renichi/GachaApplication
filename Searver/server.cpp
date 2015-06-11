@@ -25,23 +25,65 @@ void server::initialize() {
 	NetHandle = -1;
 
 	while (!ProcessMessage() && CheckHitKey(KEY_INPUT_RETURN) == 0) {
+		ClearDrawScreen();
 		// 新しい接続があったらそのネットワークハンドルを得る
 		NetHandle = GetNewAcceptNetWork();
 		if (NetHandle != -1) {
-			_NetHandleA = GetNewAcceptNetWork();
+			_NetHandleA = NetHandle;
 			clientStatusA = "ONLINE";
 		}
 		DrawString(0, 0, buf, GetColor(255, 255, 255));
 		DrawString(0, 30,(  "CLIENT_A:" + clientStatusA ).c_str( ), GetColor(255, 255, 255));
 
-		ClearDrawScreen();
+		
 	}
+	
 	// 接続の受付を終了する
 	StopListenNetWork();
 	// 接続してきたマシンのＩＰアドレスを得る
 	GetNetWorkIP(NetHandle, &Ip);
 }
 
+void server::running( ) {
+	int NetHandle,LostHandle;
+	char StrBuf[ 256 ] ;        // データバッファ
+    int DataLength ;            // 受信データ量保存用変数
+
+	NetHandle = this->getNetHandle( ); 
+
+	 // データが送られて来るまで待つ
+        while( !ProcessMessage() )
+        {
+            // 取得していない受信データ量が０以外のときはループから抜ける
+            if( GetNetWorkDataLength( NetHandle ) != 0 ) {
+				break;
+			}
+        }
+
+        // データ受信
+        DataLength = GetNetWorkDataLength( NetHandle ) ;    // データの量を取得
+        NetWorkRecv( NetHandle , StrBuf , DataLength );    // データをバッファに取得
+
+        // 受信したデータを描画
+        //DrawString( 0 , 0 , StrBuf , GetColor( 255 , 255 , 255 ) ) ;
+
+        // 受信成功のデータを送信
+        NetWorkSend( NetHandle , "繋がったぞ～！！" , 17 ) ;
+
+        // 相手が通信を切断するまで待つ
+        while( !ProcessMessage() )
+        {
+            // 新たに切断されたネットワークハンドルを得る
+            LostHandle = GetLostNetWork() ;
+
+            // 切断された接続が今まで通信してた相手だった場合ループを抜ける
+            if( LostHandle == NetHandle ) break ;
+        }
+
+        // 切断確認表示
+        DrawString( 0 , 16 , "切断しました" , GetColor( 255 , 255 , 255 ) ) ;
+}
+
 int server::getNetHandle() {
-	int _NetHandleA;
+	return _NetHandleA;
 }
