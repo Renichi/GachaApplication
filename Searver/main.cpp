@@ -7,9 +7,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 {
 	int NetHandle;
    
-    IPDATA Ip ;            // 接続先ＩＰアドレスデータ
 	int ipNum = 0;
-	char buf[ 256 ];
 
 	server* ps = new server();
 	ScoreDraw* psd = new ScoreDraw( );

@@ -13,6 +13,7 @@ DateBase::~DateBase() {
 }
 
 ScorePack DateBase::getScore( ) {
+	
 	ScorePack score = { _prizeA, _prizeB, _prizeC, _secret }; 
 	return score;
 }
