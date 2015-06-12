@@ -9,8 +9,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     int NetHandle ;        // ネットワークハンドル
 
 	ChangeWindowMode(true);
-	SetGraphMode(2160, 1440, 32);
-	
+	SetGraphMode(1280, 1024, 32);
 
     if( DxLib_Init() == -1 )    // ＤＸライブラリ初期化処理
     {
@@ -30,10 +29,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     if( NetHandle != -1 )
     { 
 		while( true ) {
-			ClearDrawScreen();
+			
 			pDraw->update();
 			//pClient->running( );
-			if (CheckHitKey(CheckHitKey(KEY_INPUT_RETURN) == 0)) {
+			if (CheckHitKey(KEY_INPUT_ESCAPE)) {
 				break;
 			}
 		}

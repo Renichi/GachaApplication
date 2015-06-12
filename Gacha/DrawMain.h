@@ -14,6 +14,8 @@ private:
 	Draw2D* _pd2;
 	bool _select;
 	int _BackGround;
+	int _BackGroundN;
+	int _BackGroundP;
 	int _kabe;
 	int _kaidan;
 	int _Elevator;
@@ -21,5 +23,13 @@ private:
 	int _premium;
 	int _chara;
 	int _secene;
+	int _scratchPlate;
+	int _scratchN;
+	int _gin;
+	int _drawWidth;
+	int _pushCount;
+	int _prize;
+	int _drawHeight;
+	int _addSpeed;
 };
 
