@@ -68,11 +68,11 @@ void DrawMain::select() {
 	int DataLength;        // 受信データ量保存用変数
 
 	DrawExtendGraph(0, 0, 1280, 1024, _BackGround, TRUE);
-	DrawExtendGraph(375, 200, 825, 1024, _kaidan, TRUE);
+	DrawExtendGraph(275, 200, 825, 980, _kaidan, TRUE);
 	DrawExtendGraph(0, 0, 375, 1024, _kabe, TRUE);
-	DrawExtendGraph(885, 180, 1255, 1024, _Elevator, TRUE);
-	DrawExtendGraph(200, 100, 350, 300, _normal, TRUE);
-	DrawExtendGraph(1000, 0, 1150, 200, _premium, TRUE);
+	DrawExtendGraph(879, 180, 1255, 978, _Elevator, TRUE);
+	DrawExtendGraph(100, 100, 350, 300, _normal, TRUE);
+	DrawExtendGraph(950, 0, 1200, 200, _premium, TRUE);
 	if (_select) {
 		DrawExtendGraph(0, 300, 400, 1024, _chara[ _charaSelect ], TRUE);
 	} else {
