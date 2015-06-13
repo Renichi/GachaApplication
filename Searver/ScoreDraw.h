@@ -14,5 +14,6 @@ public:
 private:
 	ScorePack _sp;
 	DateBase* _db;
+	RatePack _rp;
 };
 

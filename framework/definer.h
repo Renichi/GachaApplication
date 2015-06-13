@@ -15,3 +15,11 @@ struct DatePack {
 	int command;
 	int prize;
 };
+
+struct RatePack {
+	int RateA;
+	int RateB;
+	int RateC;
+	int RateD;
+	int RatePA;
+};

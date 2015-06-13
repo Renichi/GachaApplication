@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "definer.h"
 #include "DateBase.h"
+#include "ScoreDraw.h"
 #include <String>
 
 class server {
@@ -15,11 +16,14 @@ public:
 	void readAdress( DateBase& adress );
 	int normalGacha();
 	int premiumGacha();
+	void chageRate();
 private:
-	int _NetHandle[ 6 ];
+	int _NetHandle[ 7 ];
 	int _clientNum;
-	std::string clientStatus[ 6 ];
+	std::string clientStatus[ 7 ];
 	DateBase* _db;
+	ScoreDraw* _sd;
 	DatePack* _dp;
+	bool _secretFlag;
 };
 

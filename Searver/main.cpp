@@ -26,11 +26,11 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	DateBase* datebase = new DateBase( );
 
 	ps->readAdress( *datebase );
-	psd->readAdress( *datebase );
+	//psd->readAdress( *datebase );
 	
 	while( true ) {
 		ClearDrawScreen( );
-		psd->update( );
+		//psd->update( );
 		ps->running( );
 		// — ‰æ–Ê‚Ì“à—e‚ð•\‰æ–Ê‚É”½‰f‚³‚¹‚é
 		ScreenFlip();
