@@ -6,8 +6,6 @@
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
             LPSTR lpCmdLine, int nCmdShow )
 {
-	int NetHandle;
-   
 	int ipNum = 0;
 
 	server* ps = new server();
@@ -20,17 +18,15 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
         return -1;    // エラーが起きたら直ちに終了
     }
 
-	NetHandle = -1;
 	ps->initialize();
 
 	DateBase* datebase = new DateBase( );
 
 	ps->readAdress( *datebase );
-	//psd->readAdress( *datebase );
-	
+	psd->readAdress( *datebase );
 	while( true ) {
 		ClearDrawScreen( );
-		//psd->update( );
+		psd->update( );
 		ps->running( );
 		// 裏画面の内容を表画面に反映させる
 		ScreenFlip();

@@ -88,11 +88,15 @@
   <ItemGroup>
     <ClCompile Include="DateBase.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NormalGacha.cpp" />
+    <ClCompile Include="PremiumGacha.cpp" />
     <ClCompile Include="ScoreDraw.cpp" />
     <ClCompile Include="server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DateBase.h" />
+    <ClInclude Include="NormalGacha.h" />
+    <ClInclude Include="PremiumGacha.h" />
     <ClInclude Include="ScoreDraw.h" />
     <ClInclude Include="server.h" />
   </ItemGroup>

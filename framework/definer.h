@@ -21,5 +21,4 @@ struct RatePack {
 	int RateB;
 	int RateC;
 	int RateD;
-	int RatePA;
 };

@@ -3,6 +3,8 @@
 #include "definer.h"
 #include "DateBase.h"
 #include "ScoreDraw.h"
+#include "PremiumGacha.h"
+#include "NormalGacha.h"
 #include <String>
 
 class server {
@@ -18,12 +20,14 @@ public:
 	int premiumGacha();
 	void chageRate();
 private:
+	bool _secretFlag;
 	int _NetHandle[ 7 ];
 	int _clientNum;
 	std::string clientStatus[ 7 ];
 	DateBase* _db;
-	ScoreDraw* _sd;
 	DatePack* _dp;
-	bool _secretFlag;
+	ScoreDraw* _sd;
+	PremiumGacha* _pPGacha;
+	NormalGacha* _pNGacha;
 };
 
