@@ -16,15 +16,14 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
          return -1;    // エラーが起きたら直ちに終了
     }
 
-	//client* pClient = new client( );
+	client* pClient = new client( );
 	DrawMain* pDraw = new DrawMain();
 
-	//pClient->Initialize( );
+	pClient->Initialize( );
 
-    // 通信を確立
-    //NetHandle = ConnectNetWork( pClient->getIP( ), 9850 ) ;
+    //通信を確立
+    NetHandle = ConnectNetWork( pClient->getIP( ), 9850 ) ;
     // 確立が成功した場合のみ中の処理をする
-	NetHandle = 0;
     if( NetHandle != -1 ) { 
 		while( true ) {
 			pDraw->update( NetHandle );

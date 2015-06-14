@@ -1,8 +1,7 @@
 #pragma once
 #include "definer.h"
 #include "DateBase.h"
-#include <iostream>
-#include <time.h> 
+#include "DxLib.h"
 
 class PremiumGacha {
 public:

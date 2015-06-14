@@ -14,6 +14,7 @@ struct ScorePack {
 struct DatePack {
 	int command;
 	int prize;
+	bool fes;
 };
 
 struct RatePack {

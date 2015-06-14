@@ -120,4 +120,11 @@ void server::chageRate() {
 	if (CheckHitKey(KEY_INPUT_6) == 1) {
 		_db->updateRate(0, 0, -1, 0 );
 	}
+	if (CheckHitKey(KEY_INPUT_G) == 1) {
+		for (int i = 0; i < _clientNum; i++) {
+			_dp->fes = 1;
+			NetWorkSend(_NetHandle[ i ], _dp, 30);
+			_db->updateRate(0, 1000, 4000, 500);
+		}
+	}
 }

@@ -19,14 +19,13 @@ int PremiumGacha::playGacha( DateBase* _db ) {
 	int random_probability = 10000;
 	int probability;
 	//—”‚Ì‰Šú‰»
-	srand((unsigned int)time(NULL));
 	while (true) {
 		//—”‚Ì¶¬
-		probability = rand() % 10000 + 1;
+		probability = GetRand(10000);
 		//ƒKƒ`ƒƒ‚Ì’Š‘I
 		//ˆê“™Ü
 		if (probability <= rare_C_probability) {
-			prize = 2;
+			prize = 0;
 			_db->update(0, 0, 1, 0);
 			break;
 		}
@@ -38,7 +37,7 @@ int PremiumGacha::playGacha( DateBase* _db ) {
 		}
 		//O“™Ü
 		else {
-			prize = 0;
+			prize = 2;
 			_db->update(1, 0, 0, 0);
 			break;
 		}

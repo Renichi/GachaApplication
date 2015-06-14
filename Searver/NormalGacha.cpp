@@ -14,11 +14,9 @@ int NormalGacha::playGacha( DateBase* _db ) {
 	//ランダムの確立
 	int random_probability = 10000;
 	int probability;
-	//乱数の初期化
-	srand((unsigned int)time(NULL));
 	while (true) {
 		//乱数の生成
-		probability = rand() % 10000 + 1;
+		probability = GetRand(10000);
 		//ガチャの抽選
 		//secret
 		if ( probability <= rare_S_probability ) {
