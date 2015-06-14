@@ -76,7 +76,6 @@ void server::running( ) {
 			// データ受信
 			DataLength = GetNetWorkDataLength(NetHandle);    // データの量を取得
 			NetWorkRecv(NetHandle, _dp, DataLength);    // データをバッファに取得
-
 			if (_dp->command == 1) {
 				_dp->prize = _pNGacha->playGacha(_db);
 				NetWorkSend(NetHandle, _dp, 30);
@@ -124,7 +123,7 @@ void server::chageRate() {
 		for (int i = 0; i < _clientNum; i++) {
 			_dp->fes = 1;
 			NetWorkSend(_NetHandle[ i ], _dp, 30);
-			_db->updateRate(0, 1000, 4000, 500);
+			_db->updateRate(0, 700, 400, 50);
 		}
 	}
 }

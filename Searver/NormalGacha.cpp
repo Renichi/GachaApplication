@@ -25,7 +25,7 @@ int NormalGacha::playGacha( DateBase* _db ) {
 			break;
 		}
 		//“ñ“™Ü
-		else if ( rare_S_probability + rare_B_probability ) {
+		else if (probability <= (rare_S_probability + rare_B_probability)) {
 			prize = 1;
 			_db->update(0, 1, 0, 0);
 			break;

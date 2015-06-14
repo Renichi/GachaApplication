@@ -110,12 +110,34 @@ void DrawMain::select() {
 			DatePack dp;
 			dp.command = 1;
 			NetWorkSend( _NetHandle, (void*)&dp, 30);
+			// データがくるのを待つ
+			while (!ProcessMessage())  {
+				// 取得していない受信データ量を得る
+				DataLength = GetNetWorkDataLength(_NetHandle);
+
+				// 取得してない受信データ量が０じゃない場合はループを抜ける
+				if (DataLength != 0) break;
+			}
+			// データ受信
+			NetWorkRecv(_NetHandle, _rb, DataLength);    // データをバッファに取得
+			_prizeSelect = _rb->prize;
 		}
 		else {
 			_secene = 2;
 			DatePack dp;
 			dp.command = 2;
 			NetWorkSend(_NetHandle, (void*)&dp, 30);
+			// データがくるのを待つ
+			while (!ProcessMessage())  {
+				// 取得していない受信データ量を得る
+				DataLength = GetNetWorkDataLength(_NetHandle);
+
+				// 取得してない受信データ量が０じゃない場合はループを抜ける
+				if (DataLength != 0) break;
+			}
+			// データ受信
+			NetWorkRecv(_NetHandle, _rb, DataLength);    // データをバッファに取得
+			_prizeSelect = _rb->prize;
 		}
 	}
 	// 取得していない受信データ量を得る
@@ -125,7 +147,6 @@ void DrawMain::select() {
 	if (DataLength != 0) {
 		// データ受信
 		NetWorkRecv(_NetHandle, _rb, DataLength);    // データをバッファに取得
-		_prizeSelect = _rb->prize;
 		_godFlag = _rb->fes;
 	}
 }
@@ -167,8 +188,11 @@ void DrawMain::normal() {
 				WaitTimer(20);
 			}
 			_pushCount = 0;
-			WaitKey();
-			WaitTimer(1000);
+			while (true) {
+				if (CheckHitKey(KEY_INPUT_RETURN) == 1) {
+					break;
+				}
+			}
 			_secene = 0;
 		}
 	}
@@ -209,7 +233,11 @@ void DrawMain::premium() {
 				WaitTimer(20);
 			}
 			_pushCount = 0;
-			WaitKey();
+			while (true) {
+				if (CheckHitKey(KEY_INPUT_RETURN) == 1) {
+					break;
+				}
+			}
 			_secene = 0;
 		}
 	}

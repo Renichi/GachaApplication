@@ -57,7 +57,7 @@ void client::Initialize( ) {
 	 _Ip.d4 = ( unsigned char )vaPlus[ 3 ];
 }
 
-void client::running(  ) {
+void client::receiveDate(  ) {
 	// データ送信
 	int NetHandle;
 	int DataLength ;        // 受信データ量保存用変数
@@ -87,9 +87,7 @@ void client::running(  ) {
     NetWorkRecv( NetHandle , StrBuf , DataLength ) ;    // データをバッファに取得
 
     // 受信したデータを描画
-    DrawString( 0 , 0 , StrBuf , GetColor( 255 , 255 , 255 ) ) ;
-
-   
+    DrawString( 0 , 0 , StrBuf , GetColor( 255 , 255 , 255 ) ) ;  
 }
 
 IPDATA client::getIP( ) {

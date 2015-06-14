@@ -1,5 +1,6 @@
 #pragma once
 #include "Draw2D.h"
+#include "client.h"
 #include "definer.h"
 
 class DrawMain {

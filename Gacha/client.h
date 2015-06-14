@@ -11,6 +11,7 @@ public:
 	void running( );
 	void finitialize( );
 	IPDATA getIP( );
+	void receiveDate();
 private:
 	char _StrBuf[ 256 ];  //データバッファ
 	IPDATA _Ip;           //接続用IPアドレスデータ
